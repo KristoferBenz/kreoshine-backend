@@ -3,11 +3,11 @@ name: Pylint
 on:
   push:
     branches:
-    - main
+    - service
     - develop
   pull_request:
     branches:
-    - main
+    - service
     - develop
 
 jobs:
