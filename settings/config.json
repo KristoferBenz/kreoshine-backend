@@ -2,7 +2,15 @@
     "application": {
         "host": "127.0.0.1",
         "port": "8080",
-        "thread_pool_size": 5
+        "thread_pool_size": 5,
+        "postgresql": {
+            "name": "kreoshine",
+            "host": "127.0.0.1",
+            "credentials": {
+                "login": "postgres",
+                "password": "postgres"
+            }
+        }
     },
     "access_log_format": "%a %{X-Real-IP}i %t \"%r\" %s %b \"%{User-Agent}i\" %D",
     "logging": {

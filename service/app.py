@@ -11,6 +11,7 @@ import aiohttp_cors
 from aiohttp import web
 
 from service.api import ServicesEndpoint
+from db import init_engine
 
 logger = logging.getLogger('app')
 
@@ -27,7 +28,9 @@ async def on_app_start(app):
     asyncio.get_event_loop().set_default_executor(ThreadPoolExecutor(max_workers=app_config['thread_pool_size']))
 
     logger.info('Init Database engine')
-    # todo: implement database initialization
+    database_config = app_config['postgresql'].copy()
+    engine = await init_engine(database_config)
+    app['engine'] = engine
 
 
 async def on_app_stop(app) -> None:
@@ -37,7 +40,8 @@ async def on_app_stop(app) -> None:
     Args:
         app: instance of the application
     """
-    pass
+    app['engine'].close()
+    await app['engine'].wait_closed()
 
 
 def handle_exception(exc_type, exc_value, exc_traceback) -> None:
