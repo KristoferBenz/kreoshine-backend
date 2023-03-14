@@ -1,3 +1,5 @@
 aiodns
 aiohttp[speedups]
 aiohttp_cors
+SQLAlchemy
+SQLAlchemy-Utils
