@@ -19,6 +19,7 @@ class ServicesEndpoint(View):
     """
 
     async def get(self) -> Response:
+        """ Handler for GET request """
         return await self._process_get(self.request)
 
     # todo: make decorator for errors
