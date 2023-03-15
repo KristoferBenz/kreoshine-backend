@@ -12,6 +12,7 @@ from aiohttp import web
 
 from service.api import ServicesEndpoint
 from db import init_engine
+from service.dao import DAOUsers
 
 logger = logging.getLogger('app')
 
@@ -31,6 +32,8 @@ async def on_app_start(app):
     database_config = app_config['postgresql'].copy()
     engine = await init_engine(database_config)
     app['engine'] = engine
+
+    app['dao_inventory'] = DAOUsers(engine)
 
 
 async def on_app_stop(app) -> None:
