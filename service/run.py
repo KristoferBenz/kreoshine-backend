@@ -17,12 +17,12 @@ def get_config_file(parser: argparse.ArgumentParser) -> str:
     Gets configuration
     """
     project_root = str(Path(__file__).parent.parent.resolve())
-    config_file = os.path.join(project_root, 'settings/config.json')
+    path_to_config = os.path.join(project_root, 'settings/config.json')
     parser.add_argument(
         '--config',
-        help=f'configuration file {config_file}',
+        help=f'configuration file {path_to_config}',
         type=str,
-        default=config_file)
+        default=path_to_config)
 
     args, _ = parser.parse_known_args()
     if not args.config:
