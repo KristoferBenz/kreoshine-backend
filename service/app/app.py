@@ -10,9 +10,10 @@ from concurrent.futures import ThreadPoolExecutor
 import aiohttp_cors
 from aiohttp import web
 
-from service.api import ServicesEndpoint
 from db import init_engine
+from service.api import ServicesEndpoint
 from service.dao import DAOUsers
+from service.app import utils
 
 logger = logging.getLogger('app')
 
@@ -47,17 +48,6 @@ async def on_app_stop(app) -> None:
     await app['engine'].wait_closed()
 
 
-def handle_exception(exc_type, exc_value, exc_traceback) -> None:
-    """
-    Handler for uncaught exceptions
-    """
-    if issubclass(exc_type, KeyboardInterrupt):
-        sys.__excepthook__(exc_type, exc_value, exc_traceback)
-        return
-
-    logger.critical("Uncaught exception!", exc_info=(exc_type, exc_value, exc_traceback))
-
-
 def create_app(config: dict) -> web.Application:
     """
     Creates web application
@@ -82,7 +72,7 @@ def create_app(config: dict) -> web.Application:
     app['config'] = config
     logging.config.dictConfig(config['logging'])  # fixme: resolve path for a log-file — /var/log/kreoshine/service.log
 
-    sys.excepthook = handle_exception
+    sys.excepthook = utils.handle_exception
 
     app.on_startup.append(on_app_start)
     app.on_shutdown.append(on_app_stop)
