@@ -13,6 +13,11 @@
         }
     },
     "access_log_format": "%a %{X-Real-IP}i %t \"%r\" %s %b \"%{User-Agent}i\" %D",
+    "server": {
+        "admin": {
+            "sudo_passwd": "paste your pass here!"
+        }
+    },
     "logging": {
         "version": 1,
         "handlers": {

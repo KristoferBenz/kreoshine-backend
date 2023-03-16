@@ -70,7 +70,8 @@ def create_app(config: dict) -> web.Application:
     cors.add(app.router.add_route('GET', '/services', ServicesEndpoint))
 
     app['config'] = config
-    logging.config.dictConfig(config['logging'])  # fixme: resolve path for a log-file — /var/log/kreoshine/service.log
+    utils.create_logger_files(config)
+    logging.config.dictConfig(config['logging'])
 
     sys.excepthook = utils.handle_exception
 
