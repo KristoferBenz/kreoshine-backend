@@ -3,5 +3,6 @@ aiohttp[speedups]
 aiohttp_cors
 aiopg
 alembic
+dynaconf
 SQLAlchemy==1.3.24
 SQLAlchemy-Utils
