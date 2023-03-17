@@ -1,0 +1,7 @@
+[postgresql]
+name = "kreoshine"
+host = "127.0.0.1"
+
+[postgresql.credentials]
+login = "postgres"
+password = "postgres"

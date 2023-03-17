@@ -6,6 +6,8 @@ import os.path
 import platform
 import sys
 
+from config import settings
+
 logger = logging.getLogger('app')
 
 
@@ -13,13 +15,11 @@ class RootUtils:
     """
     Class with privilege escalation utilities for a Linux-based system
     """
-    def __init__(self, config: dict):
-        self._config = config
 
     @property
     def sudo_passwd(self) -> str:
         """ Password of a user with sudo rights on the server """
-        return self._config["server"]['admin']["sudo_passwd"]
+        return settings["server"]['admin']["sudo_passwd"]
 
     def create_protect_directory(self, dir_path: str) -> None:
         """ Equivalent of 'mkdirs -p {dir_path}' """
@@ -66,15 +66,12 @@ def handle_exception(exc_type, exc_value, exc_traceback) -> None:
     logger.critical("Uncaught exception!", exc_info=(exc_type, exc_value, exc_traceback))
 
 
-def create_logger_files(config: dict) -> None:
+def create_logger_files() -> None:
     """
     Creates logger file for each handler if necessary
-
-    Args:
-        config: configuration
     """
-    handlers = config['logging']['handlers']
-    root_utils = RootUtils(config)
+    handlers = settings['logging']['handlers']
+    root_utils = RootUtils()
     for handler_name, data in handlers.items():
         logger_file = data['filename']
         log_dir = os.path.dirname(logger_file)

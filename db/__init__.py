@@ -3,18 +3,19 @@ Database logic
 """
 from aiopg.sa import Engine, create_engine
 
+from config import settings
 
-async def init_engine(db_config: dict) -> Engine:
+
+async def init_engine() -> Engine:
     """
     Initiates database engine
 
     Returns:
          async engine for postgresql
     """
-    assert 'credentials' in db_config
     return await create_engine(
-        database=db_config['name'],  # fixme: initialize database (locally)
-        host=db_config['host'],
-        user=db_config['credentials']['login'],
-        password=db_config['credentials']['password'],
+        database=settings['postgresql']['name'],  # fixme: initialize database (locally)
+        host=settings['postgresql']['host'],
+        user=settings['postgresql']['credentials']['login'],
+        password=settings['postgresql']['credentials']['password'],
     )

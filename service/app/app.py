@@ -15,6 +15,8 @@ from service.api import ServicesEndpoint
 from service.dao import DAOUsers
 from service.app import utils
 
+from config import settings
+
 logger = logging.getLogger('app')
 
 
@@ -25,13 +27,11 @@ async def on_app_start(app):
     Args:
         app: instance of the application
     """
-    app_config = app['config']['application']
-
+    app_config = settings['application']
     asyncio.get_event_loop().set_default_executor(ThreadPoolExecutor(max_workers=app_config['thread_pool_size']))
 
     logger.info('Init Database engine')
-    database_config = app_config['postgresql'].copy()
-    engine = await init_engine(database_config)
+    engine = await init_engine()
     app['engine'] = engine
 
     app['dao_inventory'] = DAOUsers(engine)
@@ -48,12 +48,10 @@ async def on_app_stop(app) -> None:
     await app['engine'].wait_closed()
 
 
-def create_app(config: dict) -> web.Application:
+def create_app() -> web.Application:
     """
     Creates web application
 
-    Args:
-        config: config represented as a dict
     Returns:
         application
     """
@@ -69,9 +67,8 @@ def create_app(config: dict) -> web.Application:
 
     cors.add(app.router.add_route('GET', '/services', ServicesEndpoint))
 
-    app['config'] = config
-    utils.create_logger_files(config)
-    logging.config.dictConfig(config['logging'])
+    utils.create_logger_files()
+    logging.config.dictConfig(settings['logging'])
 
     sys.excepthook = utils.handle_exception
 
