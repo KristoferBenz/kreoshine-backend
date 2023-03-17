@@ -16,7 +16,10 @@ sudo_passwd = "passwd-of-your-local-user-allowed-sudo"
 
 2) postgres initialization
 - make docker available at your workstation
-- create volume for postgresql ``` docker create volume postgres_data ```
+- create volume for postgresql 
+```angular2html
+docker create volume postgres_data 
+```
 - create postgres container with a database named "kreoshine":
 ```angular2html
 docker run -d --hostname postgres --name postgres -p 5432:5432 -e POSTGRES_DB=kreoshine -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v postgres_data:/var/lib/postgresql/data postgres
