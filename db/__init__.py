@@ -3,7 +3,7 @@ Database logic
 """
 from aiopg.sa import Engine, create_engine
 
-from config import settings
+from settings import settings
 
 
 async def init_engine() -> Engine:

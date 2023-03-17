@@ -15,7 +15,7 @@ from service.api import ServicesEndpoint
 from service.dao import DAOUsers
 from service.app import utils
 
-from config import settings
+from settings import settings
 
 logger = logging.getLogger('app')
 

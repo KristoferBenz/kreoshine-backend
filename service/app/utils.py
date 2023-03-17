@@ -6,7 +6,7 @@ import os.path
 import platform
 import sys
 
-from config import settings
+from settings import settings
 
 logger = logging.getLogger('app')
 
