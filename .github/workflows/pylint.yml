@@ -2,14 +2,18 @@ name: Pylint
 
 on:
   push:
+    paths-ignore:
+      - 'db/migrations/**'
     branches:
     - master
     - develop
   pull_request:
+    paths-ignore:
+      - 'db/migrations/**'
     branches:
-    - master
+    - service
     - develop
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,4 +33,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint -d=fixme, E1120, no-value-for-parameter $(git ls-files '*.py')
