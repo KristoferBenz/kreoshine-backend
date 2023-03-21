@@ -1,0 +1,2 @@
+[logging.handlers.service_file]
+filename = "C:\\logs\\kreoshine\\service.log"
